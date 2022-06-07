@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../pages/friend/friend_list_page.dart';
-import '../pages/user/add_friend_page.dart';
-import '../pages/user/edit_profile_page.dart';
-import '../pages/user/news_page.dart';
-import '../utility/master.dart';
+import 'package:mapako02/pages/friend/friend_list_page.dart';
+import 'package:mapako02/pages/user/add_friend_page.dart';
+import 'package:mapako02/pages/user/edit_profile_page.dart';
+import 'package:mapako02/pages/user/news_page.dart';
+import 'package:mapako02/utility/master.dart';
 import 'cp_prop.dart';
 import 'funcwidget.dart';
 
@@ -101,7 +101,7 @@ class _ApplicationFoot extends State {
     final DocumentSnapshot newsSnap = await newsDoc.doc('inc').get();
     final Map<String, dynamic> userMap = await userSnap.get('user_info');
     final List<dynamic> newsList = await newsSnap.get('inc_news');
-    final masterInfo = MasterPartialInfo(userMap);
+    final masterInfo = MasterPartialInfo(userMap, userId);
 
     if(masterInfo.latestNewsID != newsList.length){
       return 'images/footer_icons/icon_news_notify.png';

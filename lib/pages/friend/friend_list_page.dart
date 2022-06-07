@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mapako02/models/friend/friend_list_model.dart';
+import 'package:mapako02/utility/enum.dart';
 import 'package:provider/provider.dart';
-import '../../component/cp_item.dart';
-import '../../component/cp_prop.dart';
-import '../../component/cp_screen.dart';
-import '../../component/footer.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../models/friend/friend_list_model.dart';
-import '../../utility/enum.dart';
+import 'package:mapako02/component/cp_item.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/cp_screen.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
 import 'friend_detail_page.dart';
 
 

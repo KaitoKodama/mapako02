@@ -3,12 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../component/cp_item.dart';
-import '../../component/cp_prop.dart';
-import '../../pages/friend/friend_detail_page.dart';
-import '../../utility/enum.dart';
-import '../../utility/master.dart';
+import 'package:mapako02/component/cp_item.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/pages/friend/friend_detail_page.dart';
+import 'package:mapako02/utility/enum.dart';
+import 'package:mapako02/utility/master.dart';
 
 
 /* ---------------------------------------
@@ -29,7 +28,7 @@ class FriendListModel extends ChangeNotifier{
       DocumentSnapshot docRef = await FirebaseFirestore.instance.collection('users').doc(docList[i]).get();
       if(docRef.data() != null){
         Map<String, dynamic> mapRef = docRef['user_info'];
-        friendList.add(MasterPartialInfo(mapRef));
+        friendList.add(MasterPartialInfo(mapRef, null));
       }
     }
     if(friendList.length != 0){

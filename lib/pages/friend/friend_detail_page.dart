@@ -2,14 +2,14 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mapako02/component/cp_item.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/cp_screen.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
+import 'package:mapako02/models/friend/friend_detail_model.dart';
 import 'package:provider/provider.dart';
-import '../../component/cp_item.dart';
-import '../../component/cp_prop.dart';
-import '../../component/cp_screen.dart';
-import '../../component/footer.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../models/friend/friend_detail_model.dart';
 import 'friend_list_page.dart';
 
 
@@ -55,11 +55,11 @@ class FriendDetailPage extends StatelessWidget{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            model.friendCompletedInfo.userName,
+                            Com.str(model.friendCompletedInfo.userName, "匿名"),
                             style: TextStyle(fontSize: 13,fontFamily: 'MPlus',color: HexColor('#333333')),
                           ),
                           Text(
-                            model.friendCompletedInfo.userComment,
+                            Com.str(model.friendCompletedInfo.userComment, "コメントの設定はありません"),
                             style: TextStyle(fontSize: 12,fontFamily: 'MPlus',color: HexColor('#8E8E8E')),
                           ),
                         ],
@@ -70,7 +70,7 @@ class FriendDetailPage extends StatelessWidget{
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 25),
                   child: Text(
-                    model.friendCompletedInfo.userExplain,
+                    Com.str(model.friendCompletedInfo.userExplain, "自己紹介の設定はありません"),
                     style: TextStyle(fontSize: 13,fontFamily: 'MPlusR',color: HexColor('#333333')),
                   ),
                 ),
@@ -215,7 +215,7 @@ class FriendDetailPage extends StatelessWidget{
                     child: Text(title,style: TextStyle(fontSize: 14, fontFamily: 'MPlus', color: HexColor('#333333')))
                 ),
                 Expanded(
-                  child: Text(content,style: TextStyle(fontSize: 14, fontFamily: 'MPlusR', color: HexColor('#333333'))),
+                  child: Text(Com.str(content, "-"),style: TextStyle(fontSize: 14, fontFamily: 'MPlusR', color: HexColor('#333333'))),
                 ),
               ],
             ),

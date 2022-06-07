@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-
-import '../../utility/master.dart';
-import '../../utility/system.dart';
-
+import 'package:mapako02/utility/master.dart';
+import 'package:mapako02/utility/system.dart';
 
 
 class FriendAddModel extends ChangeNotifier{
@@ -35,7 +33,7 @@ class FriendAddModel extends ChangeNotifier{
       DocumentSnapshot snapshot = await docRef.doc(elemID).get();
       if(snapshot.data() != null){
         Map<String, dynamic> mapRef = snapshot['user_info'];
-        myPartialFriendList.add(MasterPartialInfo(mapRef));
+        myPartialFriendList.add(MasterPartialInfo(mapRef, null));
       }
     }
 
@@ -44,7 +42,7 @@ class FriendAddModel extends ChangeNotifier{
       DocumentSnapshot snapshot = await docRef.doc(elemID).get();
       if(snapshot.data() != null){
         Map<String, dynamic> mapRef = snapshot['user_info'];
-        myPartialRequireList.add(MasterPartialInfo(mapRef));
+        myPartialRequireList.add(MasterPartialInfo(mapRef, null));
       }
     }
 

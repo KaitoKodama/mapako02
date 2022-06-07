@@ -2,18 +2,17 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mapako02/models/user/edit_profile_model.dart';
+import 'package:mapako02/pages/static/permission_page.dart';
 import 'package:provider/provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../component/cp_item.dart';
-import '../../component/cp_prop.dart';
-import '../../component/cp_screen.dart';
-import '../../component/footer.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../models/user/edit_profile_model.dart';
-import '../../utility/enum.dart';
-import '../static/permission_page.dart';
+import 'package:mapako02/utility/enum.dart';
+import 'package:mapako02/component/cp_item.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/cp_screen.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
 
 
 class EditProfilePage extends StatefulWidget{
@@ -52,7 +51,6 @@ class EditProfilePageState extends State<EditProfilePage>{
             buildUserIconItem(model, model.userCompletedInfo.getIconFromPath(), () async{
               if(await Permission.photos.isGranted){
                 await model.getImageProviderFromPickedImage();
-                print("WELL DONE!!!!");
               }
               else{
                 await Permission.photos.request();

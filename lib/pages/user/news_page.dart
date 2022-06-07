@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mapako02/component/cp_list.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/cp_screen.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
+import 'package:mapako02/models/user/news_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../component/cp_list.dart';
-import '../../component/cp_prop.dart';
-import '../../component/cp_screen.dart';
-import '../../component/footer.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../models/user/news_model.dart';
 import 'news_detail_page.dart';
 
 

@@ -26,9 +26,9 @@ class StyledFriendItem extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(mainText, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13,fontFamily: 'MPlus',color: HexColor('#333333')),
+                  Text(Com.str(mainText, "匿名"), overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13,fontFamily: 'MPlus',color: HexColor('#333333'), ),
                   ),
-                  Text(subText, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12,fontFamily: 'MPlus',color: HexColor('#8E8E8E')),
+                  Text(Com.str(subText, "コメントが設定されていません"), overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12,fontFamily: 'MPlus',color: HexColor('#8E8E8E')),
                   ),
                 ],
               ),

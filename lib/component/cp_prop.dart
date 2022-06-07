@@ -13,8 +13,14 @@ class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 
-class ClampValue{
-  double getClampValue(double length, double flexible){
+class Com{
+  static String str(String target, String field){
+    if(target.length != 0){
+      return target;
+    }
+    return field;
+  }
+  static double clamp(double length, double flexible){
     return length-flexible*length;
   }
 }

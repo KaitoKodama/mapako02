@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         curve: Curves.easeIn,
                         builder: (BuildContext context, double double, Widget? child) {
                           return Positioned(
-                            top: ClampValue().getClampValue(10, double),
+                            top: Com.clamp(10, double),
                             child: Opacity(
                               opacity: double,
                               child: SizedBox(
@@ -70,11 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
-                child: StyledButton('新規登録',HexColor('#1595B9'),HexColor('#FFFFFF'),HexColor('#1595B9'),(){
-                  //TODO 新規登録ページに遷移(コメントアウトページが正しい)
-                  //SplashScreen(context, SignupPage());
-
-                  SplashScreen(context, TutorialPage());
+                child: StyledButton('新規登録',HexColor('#1595B9'),HexColor('#FFFFFF'),HexColor('#1595B9'),()async{
+                  bool isSeen = await MainModel().isTutorialSeen();
+                  if(isSeen){
+                    SplashScreen(context, SignupPage());
+                  }
+                  else{
+                    SplashScreen(context, TutorialPage());
+                  }
                 }),
               ),
               Padding(

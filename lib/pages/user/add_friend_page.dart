@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mapako02/component/cp_button.dart';
+import 'package:mapako02/models/user/add_friend_model.dart';
+import 'package:mapako02/pages/static/permission_page.dart';
 import 'package:mapako02/pages/user/qr_scan_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import '../../component/cp_button.dart';
-import '../../component/cp_item.dart';
-import '../../component/cp_prop.dart';
-import '../../component/cp_screen.dart';
-import '../../component/footer.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../models/user/add_friend_model.dart';
-import '../../utility/enum.dart';
-import '../static/permission_page.dart';
+import 'package:mapako02/utility/enum.dart';
+import 'package:mapako02/component/cp_item.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/cp_screen.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
 
 
 class AddFriendIDPage extends StatefulWidget{
@@ -166,10 +166,13 @@ class AddFriendIDPageState extends State<AddFriendIDPage>{
                   ),
                   onPressed: () async{
                     if(await Permission.camera.isGranted){
+                      await Permission.camera.request();
+                      print("Enable");
                       SplashScreen(context, QRScanPage());
                     }
                     else{
                       await Permission.camera.request();
+                      print("Disable");
                       Navigator.push(context, MaterialPageRoute(builder: (context) => PermissionPage()));
                     }
                   },

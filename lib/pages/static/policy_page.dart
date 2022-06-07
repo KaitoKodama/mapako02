@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../component/cp_list.dart';
-import '../../component/footer.dart';
-import '../../component/header.dart';
+import 'package:mapako02/component/cp_list.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/header.dart';
 
 class PolicyPage extends StatefulWidget{
   @override

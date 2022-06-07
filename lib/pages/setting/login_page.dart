@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mapako02/component/cp_button.dart';
+import 'package:mapako02/component/cp_input.dart';
+import 'package:mapako02/models/setting/login_model.dart';
+import 'package:mapako02/pages/friend/friend_list_page.dart';
 import 'package:provider/provider.dart';
-
-import '../../component/cp_button.dart';
-import '../../component/cp_input.dart';
-import '../../component/cp_prop.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../models/setting/login_model.dart';
-import '../friend/friend_list_page.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
 
 
 class LoginPage extends StatefulWidget{

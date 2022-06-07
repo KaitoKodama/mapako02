@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'enum.dart';
 
@@ -8,23 +8,30 @@ import 'enum.dart';
  マスター情報
 ---------------------------------------- */
 class MasterPartialInfo{
-  MasterPartialInfo(Map<String, dynamic> mapRef){
-    if(mapRef['user_icon'] != null) this.iconPath = mapRef['user_icon'];
-    if(mapRef['user_id'] != null) this.userID = mapRef['user_id'];
-    if(mapRef['user_name'] != null) this.userName = mapRef['user_name'];
-    if(mapRef['user_comment'] != null) this.userComment = mapRef['user_comment'];
-    if(mapRef['user_exp'] != null) this.userExplain = mapRef['user_exp'];
-    if(mapRef['latest_news'] != null) this.latestNewsID = mapRef['latest_news'];
-    if(mapRef['is_logout'] != null) this.isLogout = mapRef['is_logout'];
+  MasterPartialInfo(Map<String, dynamic> mapRef, String? ownerID){
+    //オーナーではない場合はnullを格納
+    this.ownerID = ownerID;
+
+    //データの格納(オーナーであれば修正も実行される)
+    final safe = new SafeStorage(mapRef, ownerID, 'user_info');
+    safe.store<String>('user_icon', '', (field){ this.iconPath = field; });
+    safe.store<String>('user_id',  '', (field){ this.userID = field; });
+    safe.store<String>('user_name',  '', (field){ this.userName = field; });
+    safe.store<String>('user_comment',  '', (field){ this.userComment = field; });
+    safe.store<String>('user_exp',  '', (field){ this.userExplain = field; });
+    safe.store<int>('latest_news',  0, (field){ this.latestNewsID = field; });
+    safe.store<bool>('is_seen', false, (field){ this.isTutorialSeen = field; });
+    safe.store<bool>('is_logout', false, (field){ this.isLogout = field; });
   }
-  final uid = FirebaseAuth.instance.currentUser!.uid;
+  String? ownerID;
   String userID = '';
   String iconPath = '';
-  String userName = '-';
-  String userComment = '-';
-  String userExplain = '-';
+  String userName = '';
+  String userComment = '';
+  String userExplain = '';
   int latestNewsID = 0;
   bool isLogout = false;
+  bool isTutorialSeen = false;
   bool isProviding = false;
 
   ImageProvider getIconFromPath(){
@@ -38,11 +45,12 @@ class MasterPartialInfo{
  マスター情報モジュール
 ---------------------------------------- */
 class MasterCompletedInfo extends MasterPartialInfo{
-  MasterCompletedInfo(Map<String, dynamic> mapRef, Map<String, dynamic> childMap) : super(mapRef){
+  MasterCompletedInfo(Map<String, dynamic> mapRef, Map<String, dynamic> childMap, String? ownerID) : super(mapRef, ownerID){
     childMap.forEach((childID, map){
-      childInfoList.add(ChildDetail(map, childID));
+      childInfoList.add(ChildDetail(map, childID, ownerID));
     });
   }
+
   List<ChildDetail> childInfoList = [];
   String getLatestID(){
     List<int> childIDList = [];
@@ -54,7 +62,7 @@ class MasterCompletedInfo extends MasterPartialInfo{
   }
 
   void addChildDetailToList(String targetID){
-    childInfoList.add(ChildDetail({}, targetID));
+    childInfoList.add(ChildDetail({}, targetID, ownerID));
   }
   void removeChildDetailFromListDueToID(String removeID){
     var removeElement;
@@ -73,18 +81,21 @@ class MasterCompletedInfo extends MasterPartialInfo{
  お子様情報
 ---------------------------------------- */
 class ChildDetail{
-  ChildDetail(Map<String, dynamic> mapRef, String childID){
+  ChildDetail(Map<String, dynamic> mapRef, String childID, String ?ownerID){
     this.childID = childID;
     if(mapRef.isNotEmpty){
-      if(mapRef['child_order'] != null) orderUnitList.initSelectUnit(mapRef['child_order']);
-      if(mapRef['child_icon'] != null) this.iconPath = mapRef['child_icon'];
-      if(mapRef['child_name'] != null) this.name = mapRef['child_name'];
-      if(mapRef['child_birth'] != null) this.birth = mapRef['child_birth'];
-      if(mapRef['child_fav'] != null) this.favoriteFood = mapRef['child_fav'];
-      if(mapRef['child_hate'] != null) this.hateFood = mapRef['child_hate'];
-      if(mapRef['child_aller'] != null) this.allergy = mapRef['child_aller'];
-      if(mapRef['child_person'] != null) this.personality = mapRef['child_person'];
-      if(mapRef['child_exe'] != null) this.etc = mapRef['child_exe'];
+      final safe = new SafeStorage(mapRef, ownerID, 'child_info.$childID');
+      safe.store<String>('child_order', '', (field){
+        this.orderUnitList.initSelectUnit(field);
+      });
+      safe.store<String>('child_icon', '', (field){ this.iconPath = field; });
+      safe.store<String>('child_name', '', (field){ this.name = field; });
+      safe.store<String>('child_birth', '', (field){ this.birth = field; });
+      safe.store<String>('child_fav', '', (field){ this.favoriteFood = field; });
+      safe.store<String>('child_hate', '', (field){ this.hateFood = field; });
+      safe.store<String>('child_aller', '', (field){ this.allergy = field; });
+      safe.store<String>('child_person', '', (field){ this.personality = field; });
+      safe.store<String>('child_exe', '', (field){ this.etc = field; });
     }
   }
   ChildOrderUnitList orderUnitList = new ChildOrderUnitList();
@@ -108,6 +119,32 @@ class ChildDetail{
       _icon = Image.asset('images/base-icon.png').image;
     }
     return _icon;
+  }
+}
+
+
+/* ---------------------------------------
+ 安全にドキュメントを格納する(ない場合は作成する)
+---------------------------------------- */
+class SafeStorage{
+  // データのオーナーが自身の時のみフィールドの修正を実行する
+  SafeStorage(this.field, this.ownerID, this.fieldBegin);
+  final docRef = FirebaseFirestore.instance.collection('users');
+  final Map<String, dynamic> field;
+  final String? ownerID;
+  final String fieldBegin;
+
+  void store<T>(String fieldName, T defValue, Function method) async{
+    if(field[fieldName] != null){
+      method(field[fieldName]);
+    }
+    else{
+      if(ownerID != null){
+        await docRef.doc(ownerID).update({
+          '$fieldBegin.$fieldName': defValue,
+        });
+      }
+    }
   }
 }
 

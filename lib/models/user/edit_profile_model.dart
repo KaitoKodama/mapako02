@@ -4,8 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../utility/master.dart';
+import 'package:mapako02/utility/master.dart';
 
 
 class MySelfDataEditModel extends ChangeNotifier{
@@ -14,12 +13,11 @@ class MySelfDataEditModel extends ChangeNotifier{
   late final MasterCompletedInfo userCompletedInfo;
   bool isLoading = true;
 
-  // TODO 例外処理：Exceptionを検知した際にフィールド復旧ページに遷移・又はダイアログで復旧
   Future initUserData() async{
     final DocumentSnapshot docSnap = await docRef.doc(userId).get();
     final Map<String, dynamic> userMap = await docSnap.get('user_info');
     final Map<String, dynamic> childMap = await docSnap.get('child_info');
-    userCompletedInfo = MasterCompletedInfo(userMap, childMap);
+    userCompletedInfo = MasterCompletedInfo(userMap, childMap, userId);
 
     isLoading = false;
     notifyListeners();

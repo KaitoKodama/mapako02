@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mapako02/component/cp_list.dart';
+import 'package:mapako02/models/static/contact_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../component/cp_list.dart';
-import '../../component/cp_prop.dart';
-import '../../component/footer.dart';
-import '../../component/header.dart';
-import '../../models/static/contact_model.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/footer.dart';
+import 'package:mapako02/component/header.dart';
 
 class ContactPage extends StatefulWidget{
   @override

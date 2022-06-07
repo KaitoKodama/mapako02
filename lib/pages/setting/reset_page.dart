@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mapako02/component/cp_button.dart';
+import 'package:mapako02/component/cp_input.dart';
+import 'package:mapako02/main.dart';
+import 'package:mapako02/models/setting/reset_model.dart';
 import 'package:provider/provider.dart';
-import '../../component/cp_button.dart';
-import '../../component/cp_input.dart';
-import '../../component/cp_prop.dart';
-import '../../component/funcwidget.dart';
-import '../../component/header.dart';
-import '../../main.dart';
-import '../../models/setting/reset_model.dart';
+import 'package:mapako02/component/cp_prop.dart';
+import 'package:mapako02/component/funcwidget.dart';
+import 'package:mapako02/component/header.dart';
 
 
 class ResetPage extends StatefulWidget {

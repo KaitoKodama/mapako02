@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../../utility/master.dart';
+import 'package:mapako02/utility/master.dart';
 
 
 class FriendDetailModel extends ChangeNotifier{
@@ -14,7 +13,7 @@ class FriendDetailModel extends ChangeNotifier{
     final targetDoc = await FirebaseFirestore.instance.collection('users').doc(targetId).get();
     final Map<String, dynamic> targetMap = await targetDoc.get('user_info');
     final Map<String, dynamic> targetChildMap = await targetDoc.get('child_info');
-    friendCompletedInfo = new MasterCompletedInfo(targetMap, targetChildMap);
+    friendCompletedInfo = new MasterCompletedInfo(targetMap, targetChildMap, null);
 
     isLoading = false;
     notifyListeners();

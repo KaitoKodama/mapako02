@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 
 class TutorialModel extends ChangeNotifier{
-  bool isLoading = true;
+  bool isLoading = false;
 
-
-  Future initTutorialModel() async{
-
-
-    isLoading = false;
+  Future init(BuildContext context) async{
+    isLoading = true;
     notifyListeners();
   }
 }

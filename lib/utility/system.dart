@@ -38,7 +38,7 @@ class RequestUnitManager{
           return RequestUnit("同一ユーザーが既にフレンドリストに追加されています", RequestState.IsInFriendList);
         }
       }
-      final requestTarget = MasterPartialInfo(await targetDoc.get('user_info'));
+      final requestTarget = MasterPartialInfo(await targetDoc.get('user_info'), null);
       if(requestTarget.isLogout){
         return RequestUnit("ログアウト中のユーザーには申請を行えません", RequestState.IsLogout);
       }
